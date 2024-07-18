@@ -1,14 +1,14 @@
 import csv
 
 # CSV file path
-file_path = "/Users/andrewsobiech/Desktop/Classwork/UNCC-VIRT-DATA-PT-06-2024-U-LOLC-main/github repositories/python-challenge/PyBank/budget_data.csv"
+file_path = "/Users/andrewsobiech/Desktop/Classwork/UNCC-VIRT-DATA-PT-06-2024-U-LOLC-main/github repositories/python-challenge/PyBank/Resources/budget_data.csv"
 
-# initialize var
+# Initialize variables
 total_months = 0
 total_profit_losses = 0
 changes = []
 previous_value = None
-greatest_increase = ['Data', 0]
+greatest_increase = ['Date', 0]
 greatest_decrease = ['Date', 0]
 
 # Read CSV file
@@ -17,30 +17,34 @@ with open(file_path, mode='r') as file:
     header = next(csv_reader)
 
     for row in csv_reader:
-      total_months +=1
-      current_profit_losses = int(row[1])
-      total_profit_losses += current_profit_loses
+        total_months += 1
+        current_profit_losses = int(row[1])
+        total_profit_losses += current_profit_losses
 
-      # calc changes in profits/losses
-      if previous_valie is not None:
-          change = current_profit_losses - previous_value
-          changes.append(change)
+        # Calculate changes in profits/losses
+        if previous_value is not None:
+            change = current_profit_losses - previous_value
+            changes.append(change)
 
-          # greatest increase in profits
-          if change > greatest_increase[1]:
-              greatest_increase = [row[0], change]
+            # Greatest increase in profits
+            if change > greatest_increase[1]:
+                greatest_increase = [row[0], change]
 
-          #  greatest decrease in profits
-          if change < greatest_decrease[1]:
-              greatest_decrease = [row[0], change]
+            # Greatest decrease in profits
+            if change < greatest_decrease[1]:
+                greatest_decrease = [row[0], change]
 
-      previous_value = current_profit_losses
+        previous_value = current_profit_losses
 
-# Calculate average of changes
-average_change = sum(changes) / len(changes)
+# Calculate average of changes, handle division by zero
+if changes:
+    average_change = sum(changes) / len(changes)
+else:
+    average_change = 0
 
 # Print to terminal
 print("Financial Analysis")
+print("----------------------------")
 print(f"Total Months: {total_months}")
 print(f"Total: ${total_profit_losses}")
 print(f"Average Change: ${average_change:.2f}")
